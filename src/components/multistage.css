@@ -1,0 +1,73 @@
+/* .Fstage{
+} */
+
+
+
+.First{
+    text-align: center;
+    /* margin: 50px auto; */
+    padding-top: 30px;
+    font-size: 30px;
+    color:yellow;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.firststage{
+    background: linear-gradient(grey,black);
+    width: 500px;
+    height: auto;
+    border: red solid 2px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.firststage label{color:yellow}
+
+.success-btn{
+    margin-left: 300px;
+}
+
+.Results{
+    border: red solid 4px;
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.Results-table{
+    width: 700px;
+    height: auto;
+    text-align:left;
+    margin: 10px auto;
+}
+th{background-color:orange;
+    padding-left: 50px;
+}
+
+tr:nth-child(odd){background-color:antiquewhite;}
+
+.Results-table tr:nth-child(even){
+    background-color: white;
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.Results-table tr,td{
+    padding-left: 50px;
+    padding-top: 5px;
+}
+
+.Results-home-btn{
+    margin:20px 50px;
+}
+
+.Results-download-btn{
+    margin-left: 10px
+}

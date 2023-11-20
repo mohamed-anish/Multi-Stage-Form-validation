@@ -1,48 +1,167 @@
 // import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Firststage from './components/Firststage';
+import Secondstage from './components/Secondstage';
+import Thirdstage from './components/Thirdstage';
+import Results from './components/Results';
+// import Button from 'react-bootstrap/Button'
+
+
+
 
 
 function App() {
+  const [details,setDetails]=useState({
+    firstname:"",
+    lastname:"",
+    dob:"",
+    gender:"",
+    college:"",
+    degree:"",
+    EmailID:"",
+    contactnumber:"",
+    street:"",
+    city:"",
+    state:"",
+    country:""
+
+  })
+  console.log(details)
+
+  const [isFirststage, setIsFirststage] = useState(true);
+  const [isSecondstage,setIsSecondstage] = useState(false);
+  const [isThirdstage,setIsThirdstage] = useState(false);
+  const [isSubmitted,setIsSubmited] = useState(false)
+  // use state data
+  const [formData,setFormData] = useState({})
+  // const alldata = [{...formData}]
+  // console.log(alldata)
+
+ const onFirststageButtonClick = ()=>{
+  
+    if( validate(details.firstname,'text') && validate(details.lastname,'text') && details.dob && validate(details.gender,'text')){
+    setIsFirststage(false);
+    setIsSecondstage(true);
+    }
+    else{alert("every inputs are need values")}
+  }
+
+  const validate =(value,type)=>{
+    
+    if(type === 'text' && value.length !== 0){
+      const data =/^[a-zA-Z]/.test()
+      console.log(data)
+     return  data
+    }else if(type === 'email' && value.length !== 0){
+      console.log(/^S+@\S+\.\S+$/.test(value))
+      
+      return  value
+    }else if(type === 'number' && value.length !== 0){
+      console.log(/^[0-9]/.test(value))
+      return  /^[0-9]/.test(value)
+    }else{
+      return false
+    }
+
+  }
+  const onSecondstageButtonClick = (key)=>{
+
+      if(key==='next'){
+        if( validate(details.college,'text') && validate(details.degree,'text') && validate(details.EmailID,"email") && validate(details.contactnumber,'number')){
+        setIsSecondstage(false);
+        setIsThirdstage(true);
+        }else{
+          alert("every inputs are need values")
+        }
+      }
+      else{
+        setIsSecondstage(false);
+        setIsFirststage(true);
+        setIsThirdstage(false);
+    
+      }
+
+  }
+
+  const onThirdstageButtonClick = (key)=>{
+    if(key==='prev'){
+      setIsSecondstage(true);
+      setIsThirdstage(false);  
+    }
+    else{
+      if( validate(details.street,'text') && validate(details.city,'text') && validate(details.state,"text") && validate(details.country,'text')){
+      setIsFirststage(false);
+      setIsSecondstage(false);
+      setIsThirdstage(false);
+      setIsSubmited(true)
+      }else{
+        alert("every inputs are need values")
+      }
+    }
+  }
+
+  const onGoToHomepage = ()=>{
+    setIsFirststage(true);
+    setIsSubmited(false)
+    setDetails({
+      firstname:"",
+      lastname:"",
+      dob:"",
+      gender:"",
+      college:"",
+      degree:"",
+      EmailID:"",
+      contactnumber:"",
+      street:"",
+      city:"",
+      state:"",
+      country:""
+  
+    })
+  }
+
+  // onfirstpagechange arg data
+  const onFirstpageChange = (fdata)=>{
+    
+    setFormData({...formData, ...fdata});
+    // console.log(formData)
+  }
+  //setData
+
+  const onSecondpageChange = (sdata)=>{
+    setFormData({...formData,...sdata})
+    // console.log(formData)
+
+  }
+
+  const onThirdpageChange = (tdata)=>{
+    setFormData({...formData,...tdata})
+    // console.log(formData)
+  }
+
+
   return (
     <div className="App" >
-      <header className="App-header"style={{border:"red solid 5px",width:"500px"}}>
-        <h1>hi hello!!! welcome to Multiple Stage Form</h1>
-        <div>
-          <label style={{margin:0,padding:0,fontSize:"15px",textAlign:"right"}}>FIRST NAME*</label><br></br>
-          <input type='text' placeholder='Enter your First name' 
-                 style={{width:"300px",height:"30px",textAlign:"center",borderRadius:"5px"}}></input>
-        </div>
-        <div>
-          <label style={{margin:0,padding:0,fontSize:"15px",textAlign:"right"}}>LAST NAME*</label><br></br>
-          <input type='text' placeholder='Enter your last name' 
-                 style={{width:"300px",height:"30px",textAlign:"center",borderRadius:"5px"}}></input>
-        </div>
-        <div>
-          <label style={{margin:0,padding:0,fontSize:"15px",textAlign:"right"}}>DATE OF BIRTH*</label><br></br>
-          <input type='text' placeholder='Enter your Date of Birth' 
-                 style={{width:"300px",height:"30px",textAlign:"center",borderRadius:"5px"}}></input>
-        </div>
-        <div>
-          <label style={{margin:0,padding:0,fontSize:"15px",textAlign:"right"}}>GENDER NAME*</label><br></br>
-          <input type='text' placeholder='Enter your Gender name' 
-                 style={{width:"300px",height:"30px",textAlign:"center",borderRadius:"5px"}}></input><br></br>
-          <button style={{marginTop:"20px",borderRadius:"5px"}}>NEXT</button>
-        </div>
-
+      <header className='App-header'>
+        <h1>GO POLICY/GOOD.IN</h1>
+        <h4>Customer Profile Registration</h4>
       </header>
-      <div>
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-        <Form.Control
-          placeholder="Username"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-        />
-      </InputGroup>
 
-      </div>
+      {isFirststage &&
+      <>      <Firststage fdata={details} setFData={setDetails} onFirststageButtonClick={onFirststageButtonClick} onFirstpageChange={onFirstpageChange}/>      </>
+      }
+      
+      {isSecondstage &&
+        <>      <Secondstage sdata={details} setSData={setDetails} onSecondstageButtonClick={onSecondstageButtonClick} onSecondpageChange={onSecondpageChange}/>        </>
+      }
+
+      {isThirdstage &&
+      <>      <Thirdstage tdata={details} setTData={setDetails} onThirdstageButtonClick={onThirdstageButtonClick} onThirdpageChange={onThirdpageChange}/>      </>
+      }
+      {isSubmitted && 
+      <>      <Results formData={details} onGoToHomepage={onGoToHomepage}/>   </>
+      }
     </div>
   );
 }
